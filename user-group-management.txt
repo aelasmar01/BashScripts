@@ -1,0 +1,6 @@
+This file describes the user-group-managment script, how to use it, as well as design choices I made when writing this script
+
+When using this script please use a virtual machine, this script will make changes on your machine. 
+In order to turn this script into an executable type chmod +x <filename> or chmod +755 <filename>.
+You must run this script with sudo or admin priviliages.
+
