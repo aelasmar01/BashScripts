@@ -4,3 +4,31 @@ When using this script please use a virtual machine, this script will make chang
 In order to turn this script into an executable type chmod +x <filename> or chmod +755 <filename>.
 You must run this script with sudo or admin priviliages.
 
+This Bash script is designed to allow a user to manage users and groups on a Linux system. It provides options to create, modify, or delete users and groups. Let's go through the script and discuss its design choices:
+
+Root Privilege Check: The script starts by checking whether it's being run with root privileges using the UID (User ID) variable. It exits with an error message if not executed as root.
+
+Functions: The script defines several functions for different tasks:
+
+create_user(): Allows the user to create a new user. It generates a random password for the user and sets it using useradd and chpasswd.
+modify_user(): Allows the user to modify attributes of an existing user, such as username, UID, GID, and home directory.
+create_group(): Allows the user to create a new group with a specified GID and name.
+delete_group(): Allows the user to delete an existing group by providing its name.
+Main Menu: The script presents a main menu to the user using a while loop. It continuously prompts the user for input and performs the corresponding action based on their choice. The options are:
+
+Create a user
+Modify a user
+Create a group
+Delete a group
+Exit the script
+Input Validation: The script checks for valid input and performs error handling. For example, it checks if a user or group already exists before attempting to create or modify it.
+
+Output and Messaging: The script provides informative messages to the user after each action. It informs the user about the success or failure of the operation and displays relevant information.
+
+Design Choices:
+
+The script uses functions to modularize code and make it more organized and readable.
+It provides clear and user-friendly prompts to guide the user through each task.
+It employs conditional statements (if, case) for decision-making and error checking.
+It uses command-line utilities like useradd, groupadd, usermod, and groupdel to perform user and group management tasks, which are standard on Linux systems.
+Overall, the script aims to simplify user and group management tasks on a Linux system, making it accessible to users who may not be familiar with command-line utilities for these purposes. However, it's essential to use such scripts with caution, especially in production environments, to prevent unintended changes.
