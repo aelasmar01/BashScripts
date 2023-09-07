@@ -31,4 +31,5 @@ The script uses functions to modularize code and make it more organized and read
 It provides clear and user-friendly prompts to guide the user through each task.
 It employs conditional statements (if, case) for decision-making and error checking.
 It uses command-line utilities like useradd, groupadd, usermod, and groupdel to perform user and group management tasks, which are standard on Linux systems.
-Overall, the script aims to simplify user and group management tasks on a Linux system, making it accessible to users who may not be familiar with command-line utilities for these purposes. However, it's essential to use such scripts with caution, especially in production environments, to prevent unintended changes.
+Overall, the script aims to simplify user and group management tasks on a Linux system, making it accessible to users who may not be familiar with command-line utilities for these purposes.
+However, it's essential to use such scripts with caution, especially in production environments, to prevent unintended changes.
