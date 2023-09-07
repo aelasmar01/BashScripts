@@ -1,60 +1,46 @@
-#!/bin/bash
+This Bash script is designed to automate the process of creating backups for a specified source directory, managing these backups according to a defined retention policy, and storing them in a designated backup directory. It makes use of functions to structure the code logically and enhance reusability.
 
-# Determine the current user, falling back to SUDO_USER if not available
-current_user=$(logname || echo "$SUDO_USER")
+**How to use it:**
 
-# Define the directory where backups will be stored
-directory_name="/home/$current_user/testDir"
+1. **Determining the Current User:**
+   - The script starts by determining the current user. It uses `logname` to find the current user, falling back to `$SUDO_USER` if `logname` is not available. The result is stored in the `current_user` variable.
 
-# Define backup directory
-BACKUP_DIR="/home/${current_user}/backUps/"
+2. **Defining Directories:**
+   - The script defines several directory paths:
+     - `directory_name`: The directory where backups will be stored.
+     - `BACKUP_DIR`: The main backup directory where backup folders will be created.
+     - `SOURCE_DIR`: The source directory to be backed up.
+     - `RETENTION_DAYS`: The number of days to retain backups.
 
-# Define source directory to be backed up
-SOURCE_DIR="/home/${current_user}/bashProjects/"
+3. **Backup Function (`perform_backup`):**
+   - This function performs the backup process:
+     - It creates a timestamp for the backup folder.
+     - Defines the backup folder name using the timestamp.
+     - Creates the backup directory.
+     - Uses `tar` to create a compressed archive of the source directory and stores it in the backup folder.
 
-# Define retention policy (in days)
-RETENTION_DAYS=7
+4. **Backup Management Function (`manage_backups`):**
+   - This function manages the backup process:
+     - Checks if the backup directory exists and creates it if not.
+     - Calls the `perform_backup` function to create a new backup.
+     - Cleans up backups older than the defined retention policy by removing folders that exceed the specified age.
 
-# Function to perform backup
-perform_backup() {
-    # Create a timestamp for the backup folder
-    backup_timestamp=$(date +'%Y%m%d%H%M%S')
-    
-    # Define the backup folder name
-    backup_folder="${BACKUP_DIR}backup_${backup_timestamp}"
-    
-    # Create the backup directory
-    mkdir -p "$backup_folder"
-    
-    # Use tar to create a compressed archive of the source directory
-    tar -czvf "${backup_folder}/backup.tar.gz" -C "${SOURCE_DIR}" .
-    
-    echo "Backup completed in $backup_folder."
-}
+5. **Main Function (`main`):**
+   - The main function simply calls the `manage_backups` function to initiate the backup and retention management process.
 
-# Function to manage backup rotation and retention
-manage_backups() {
-    echo "Managing backups in $BACKUP_DIR..."
-    
-    # Check if the backup directory exists, create it if not
-    if [ ! -d "$BACKUP_DIR" ]; then
-        mkdir -p "$BACKUP_DIR"
-    fi
-    
-    # Perform the backup
-    perform_backup
-    
-    # Clean up backups older than the retention policy
-    find "$BACKUP_DIR" -type d -mtime +$RETENTION_DAYS -exec rm -rf {} \;
-    
-    echo "Backup management completed."
-}
+6. **Executing the Script:**
+   - The script ends by executing the `main` function, which triggers the backup and management of backups.
 
-# Main function
-main() {
-    # Call the backup management function
-    manage_backups
-}
+**Design Choices:**
 
-# Execute the main function
-main
+1. **Functions:** The script uses functions to modularize the code and enhance readability. This makes it easier to understand and maintain the script.
+
+2. **Variables:** It uses variables to store user-specific and directory-related information, making it flexible for different users and directories.
+
+3. **Timestamp:** A timestamp is included in the backup folder name to ensure uniqueness and facilitate tracking of backups.
+
+4. **Backup Rotation:** The script implements a retention policy to clean up backups older than a specified number of days, ensuring efficient disk usage.
+
+5. **Logging:** The script includes informative `echo` statements to provide feedback on the backup and cleanup processes.
+
+Overall, this script provides a structured and automated way to manage backups, ensuring data safety and efficient storage usage. To use it, you can customize the `SOURCE_DIR` and `RETENTION_DAYS` variables to match your specific backup needs and then execute the script.
