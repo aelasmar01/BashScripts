@@ -1,5 +1,12 @@
 #!/bin/bash
 
+#This script requires root privilages
+if [[ "${UID}" -ne 0 ]]
+then 
+	echo "Use sudo ${0} or run as root"
+	exit 1
+fi
+
 # Determine the current user, falling back to SUDO_USER if not available
 current_user=$(logname || echo "$SUDO_USER")
 
